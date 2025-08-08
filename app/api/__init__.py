@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from core.config import settings
+from app.core.config import settings
 from .auth import router as auth_router
 from .restaurant import router as restaurant_router
 

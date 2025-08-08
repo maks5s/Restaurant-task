@@ -3,8 +3,8 @@ from datetime import timedelta, datetime, timezone
 import bcrypt
 import jwt
 
-from core.config import settings
-from core.models import User
+from app.core.config import settings
+from app.core.models import User
 
 
 def encode_jwt(

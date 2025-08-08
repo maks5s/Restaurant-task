@@ -1,8 +1,8 @@
 from pydantic import BaseModel, Field
 import datetime
 
-from core.schemas.dish import DishReadSchema
-from core.models import Menu
+from app.core.schemas.dish import DishReadSchema
+from app.core.models import Menu
 
 
 class MenuSchema(BaseModel):

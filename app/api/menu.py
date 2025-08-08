@@ -4,11 +4,11 @@ from typing import Union
 from fastapi import APIRouter, Depends, Query, Header
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.models import db_helper, Employee, Restaurant
-from core.schemas.menu import MenuReadSchema, MenuCreateSchema, MenuVotesSchema, LegacyMenuVotesSchema
-from crud import menu as crud_menu
-from crud import restaurant as crud_restaurant
-from auth import user as auth_user
+from app.core.models import db_helper, Employee, Restaurant
+from app.core.schemas.menu import MenuReadSchema, MenuCreateSchema, MenuVotesSchema, LegacyMenuVotesSchema
+from app.crud import menu as crud_menu
+from app.crud import restaurant as crud_restaurant
+from app.auth import user as auth_user
 
 
 router = APIRouter(tags=["Menus"])

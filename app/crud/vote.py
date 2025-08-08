@@ -4,9 +4,9 @@ from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.models import Employee, Vote
-from core.schemas.vote import VoteCreateSchema
-from crud import menu as crud_menu
+from app.core.models import Employee, Vote
+from app.core.schemas.vote import VoteCreateSchema
+from app.crud import menu as crud_menu
 
 
 async def get_vote_by_employee_and_date(

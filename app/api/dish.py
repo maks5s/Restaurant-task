@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.models import db_helper, Employee, Restaurant
-from core.schemas.dish import DishReadSchema, DishCreateSchema
-from crud import dish as crud_dish
-from crud import restaurant as crud_restaurant
-from auth import user as auth_user
+from app.core.models import db_helper, Employee, Restaurant
+from app.core.schemas.dish import DishReadSchema, DishCreateSchema
+from app.crud import dish as crud_dish
+from app.crud import restaurant as crud_restaurant
+from app.auth import user as auth_user
 
 
 router = APIRouter(tags=["Dishes"])

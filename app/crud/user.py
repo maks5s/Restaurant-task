@@ -2,9 +2,9 @@ from fastapi import HTTPException,status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from auth.utils import hash_password
-from core.models import User
-from core.schemas.auth import RegisterSchema
+from app.auth.utils import hash_password
+from app.core.models import User
+from app.core.schemas.auth import RegisterSchema
 
 
 async def get_user_by_username(

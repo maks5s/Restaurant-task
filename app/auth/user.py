@@ -3,12 +3,12 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jwt import InvalidTokenError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.config import settings
-from core.models import User, db_helper, Employee
-from core.schemas.auth import TokenInfo, LoginSchema, LogoutMessage
-from crud import user as crud_user
-from crud import employee as crud_employee
-from auth import utils as auth_utils
+from app.core.config import settings
+from app.core.models import User, db_helper, Employee
+from app.core.schemas.auth import TokenInfo, LoginSchema, LogoutMessage
+from app.crud import user as crud_user
+from app.crud import employee as crud_employee
+from app.auth import utils as auth_utils
 
 http_bearer = HTTPBearer()
 

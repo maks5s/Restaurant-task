@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.models import db_helper, Employee, Restaurant
-from core.schemas.vote import VoteReadSchema, VoteCreateSchema
-from crud import vote as crud_vote
-from crud import restaurant as crud_restaurant
-from auth import user as auth_user
+from app.core.models import db_helper, Employee, Restaurant
+from app.core.schemas.vote import VoteReadSchema, VoteCreateSchema
+from app.crud import vote as crud_vote
+from app.crud import restaurant as crud_restaurant
+from app.auth import user as auth_user
 
 
 router = APIRouter(tags=["Votes"])

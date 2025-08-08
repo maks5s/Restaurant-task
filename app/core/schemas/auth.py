@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 
-from core.schemas.user import UserPasswordSchema
+from app.core.schemas.user import UserPasswordSchema
 
 
 class LoginSchema(UserPasswordSchema):

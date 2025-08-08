@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 
-from core.schemas.user import UserSchema
+from app.core.schemas.user import UserSchema
 
 
 class EmployeeSchema(BaseModel):

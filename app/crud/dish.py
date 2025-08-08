@@ -2,8 +2,8 @@ from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.models import Dish
-from core.schemas.dish import DishCreateSchema
+from app.core.models import Dish
+from app.core.schemas.dish import DishCreateSchema
 
 
 async def get_dish_by_name_and_restaurant(

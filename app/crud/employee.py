@@ -3,9 +3,9 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
-from core.models import Employee
-from core.schemas.employee import EmployeeCreateSchema
-from crud import user as crud_user
+from app.core.models import Employee
+from app.core.schemas.employee import EmployeeCreateSchema
+from app.crud import user as crud_user
 
 
 async def get_employee_by_user_and_restaurant(

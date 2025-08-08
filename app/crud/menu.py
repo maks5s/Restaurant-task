@@ -5,10 +5,10 @@ from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
-from core.config import settings
-from core.models import Menu, Dish, MenuDish, Vote
-from core.schemas.dish import DishReadSchema
-from core.schemas.menu import MenuCreateSchema, MenuReadSchema, MenuVotesSchema, LegacyMenuVotesSchema
+from app.core.config import settings
+from app.core.models import Menu, Dish, MenuDish, Vote
+from app.core.schemas.dish import DishReadSchema
+from app.core.schemas.menu import MenuCreateSchema, MenuReadSchema, MenuVotesSchema, LegacyMenuVotesSchema
 
 
 async def get_menu_by_id(

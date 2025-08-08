@@ -2,8 +2,8 @@ from fastapi import HTTPException, status, Depends
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.models import User, Restaurant, Employee, db_helper
-from core.schemas.restaurant import RestaurantCreateSchema
+from app.core.models import User, Restaurant, Employee, db_helper
+from app.core.schemas.restaurant import RestaurantCreateSchema
 
 
 async def check_restaurant_exists(
