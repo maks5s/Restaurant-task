@@ -31,6 +31,18 @@ class DatabaseConfig(BaseModel):
     }
 
 
+class AuthJWT(BaseModel):
+    private_key_path: Path = BASE_DIR / "certs" / "jwt-private.pem"
+    public_key_path: Path = BASE_DIR / "certs" / "jwt-public.pem"
+    algorithm: str = "RS256"
+    access_token_expire_minutes: int = 15
+    refresh_token_expire_minutes: int = 60 * 24 * 30  # 30 days
+    token_type_field: str = "type"
+    access_token_type: str = "access"
+    refresh_token_type: str = "refresh"
+    refresh_token: str = "refresh_token"
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=BASE_DIR / ".env",
@@ -41,6 +53,7 @@ class Settings(BaseSettings):
     run: RunConfig = RunConfig()
     api: ApiPrefix = ApiPrefix()
     db: DatabaseConfig
+    auth_jwt: AuthJWT = AuthJWT()
 
 
 settings = Settings()
