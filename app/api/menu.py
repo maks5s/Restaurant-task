@@ -1,10 +1,11 @@
 import datetime
+from typing import Union
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, Header
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.models import db_helper, Employee, Restaurant
-from core.schemas.menu import MenuReadSchema, MenuCreateSchema, MenuVotesSchema
+from core.schemas.menu import MenuReadSchema, MenuCreateSchema, MenuVotesSchema, LegacyMenuVotesSchema
 from crud import menu as crud_menu
 from crud import restaurant as crud_restaurant
 from auth import user as auth_user
@@ -38,14 +39,16 @@ async def get_current_menu(
     return MenuReadSchema.to_schema(menu)
 
 
-@router.get("/{restaurant_id}/menus/results", response_model=list[MenuVotesSchema])
+@router.get("/{restaurant_id}/menus/results",
+    response_model=Union[list[MenuVotesSchema], list[LegacyMenuVotesSchema]])
 async def get_current_day_results(
     restaurant_id: int,
     session: AsyncSession = Depends(db_helper.session_getter),
     employee: Employee = Depends(auth_user.get_employee_for_restaurant),
-    restaurant: Restaurant = Depends(crud_restaurant.check_restaurant_exists)
+    restaurant: Restaurant = Depends(crud_restaurant.check_restaurant_exists),
+    app_version: str = Header(default="2.0.0", alias="X-App-Version"),
 ):
-    return await crud_menu.get_day_results(restaurant_id, session)
+    return await crud_menu.get_day_results(restaurant_id, session, app_version)
 
 
 @router.get("/{restaurant_id}/menus", response_model=list[MenuReadSchema])

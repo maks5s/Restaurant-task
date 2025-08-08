@@ -5,8 +5,10 @@ from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
+from core.config import settings
 from core.models import Menu, Dish, MenuDish, Vote
-from core.schemas.menu import MenuCreateSchema, MenuReadSchema, MenuVotesSchema
+from core.schemas.dish import DishReadSchema
+from core.schemas.menu import MenuCreateSchema, MenuReadSchema, MenuVotesSchema, LegacyMenuVotesSchema
 
 
 async def get_menu_by_id(
@@ -111,7 +113,8 @@ async def get_current_menu(
 
 async def get_day_results(
     restaurant_id: int,
-    session: AsyncSession
+    session: AsyncSession,
+    app_version: str
 ):
     today = datetime.date.today()
 
@@ -132,9 +135,22 @@ async def get_day_results(
     if not rows:
         return []
 
-    return (
-        [MenuVotesSchema(
-            menu=MenuReadSchema.to_schema(menu),
-            votes=vote_count
-        ) for menu, vote_count in rows]
-    )
+    # Different responses based on user`s app version
+    if settings.is_legacy(app_version):
+        return (
+            [LegacyMenuVotesSchema(
+                id=menu.id,
+                name=menu.title,
+                date=menu.date,
+                restaurant_id=menu.restaurant_id,
+                dishes_list=[DishReadSchema.from_orm(md.dish) for md in menu.menu_dishes if md.dish is not None],
+                votes_count=vote_count
+            ) for menu, vote_count in rows]
+        )
+    else:
+        return (
+            [MenuVotesSchema(
+                menu=MenuReadSchema.to_schema(menu),
+                votes=vote_count
+            ) for menu, vote_count in rows]
+        )

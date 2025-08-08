@@ -33,3 +33,12 @@ class MenuReadSchema(MenuSchema):
 class MenuVotesSchema(BaseModel):
     menu: MenuReadSchema
     votes: int
+
+
+class LegacyMenuVotesSchema(BaseModel):
+    id: int
+    name: str = Field(..., min_length=1, max_length=50)
+    date: datetime.date
+    restaurant_id: int
+    dishes_list: list[DishReadSchema]
+    votes_count: int

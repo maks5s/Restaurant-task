@@ -55,5 +55,10 @@ class Settings(BaseSettings):
     db: DatabaseConfig
     auth_jwt: AuthJWT = AuthJWT()
 
+    # App version which starts with 1.x.x is considered to be legacy
+    @staticmethod
+    def is_legacy(app_version):
+        return True if app_version.startswith("1.") else False
+
 
 settings = Settings()
