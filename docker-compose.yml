@@ -1,0 +1,51 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: restaurant_db
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d restaurant_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app_network
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app/app
+      - ./app/alembic.ini:/app/app/alembic.ini
+      - ./app/alembic:/app/app/alembic
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APP_CONFIG__DB__URL: postgresql+asyncpg://postgres:admin@db:5432/restaurant_db
+      APP_CONFIG__DB__ECHO: 1
+      APP_CONFIG__RUN__HOST: 0.0.0.0
+      APP_CONFIG__RUN__PORT: 8000
+    networks:
+      - app_network
+    restart: unless-stopped
+
+volumes:
+  pg_data:
+
+networks:
+  app_network:
+    driver: bridge
