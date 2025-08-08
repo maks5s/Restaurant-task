@@ -4,10 +4,11 @@ from jwt import InvalidTokenError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
-from app.core.models import User, db_helper, Employee
+from app.core.models import User, db_helper, Employee, Restaurant
 from app.core.schemas.auth import TokenInfo, LoginSchema, LogoutMessage
 from app.crud import user as crud_user
 from app.crud import employee as crud_employee
+from app.crud import restaurant as crud_restaurant
 from app.auth import utils as auth_utils
 
 http_bearer = HTTPBearer()
@@ -114,6 +115,7 @@ async def get_employee_for_restaurant(
     restaurant_id: int,
     session: AsyncSession = Depends(db_helper.session_getter),
     user: User = Depends(get_current_auth_user),
+    restaurant: Restaurant = Depends(crud_restaurant.check_restaurant_exists)
 ):
     employee = await crud_employee.get_employee_by_user_and_restaurant(
         session=session,
