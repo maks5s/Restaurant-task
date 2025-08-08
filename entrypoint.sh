@@ -21,13 +21,13 @@ while [ $attempt -le $max_attempts ]; do
     attempt=$((attempt + 1))
 done
 
-cd /app/app
+cd /app
 
 echo "📦 Applying migrations..."
-if ! alembic upgrade head; then
+if ! alembic -c app/alembic.ini upgrade head; then
     echo "Migration failed!"
     exit 1
 fi
 
 echo "Starting FastAPI..."
-exec python -m uvicorn main:main_app --host 0.0.0.0 --port 8000 --reload
+exec python -m uvicorn app.main:main_app --host 0.0.0.0 --port 8000 --reload
